@@ -1,11 +1,28 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using TagManage.Data;
+using TagManage.Domain.Command;
+using TagManage.Domain.Query;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("LocalConnection")));
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TagManage", Version = "v1" });
+});
+
+builder.Services.AddScoped<TagCommand>();
+builder.Services.AddScoped<TagQuery>();
 
 var app = builder.Build();
 
@@ -13,10 +30,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "TagManage");
+        c.RoutePrefix = "swagger";
+    });
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

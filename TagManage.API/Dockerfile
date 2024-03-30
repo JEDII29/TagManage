@@ -3,21 +3,23 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["TagManage.API/TagManage.API.csproj", "TagManage.API/"]
+COPY ["TagManage.API/TagManage.Data.csproj", "TagManage.Data/"]
+COPY ["TagManage.API/TagManage.Domain.csproj", "TagManage.Domain/"]
+
 RUN dotnet restore "./TagManage.API/TagManage.API.csproj"
 COPY . .
+
 WORKDIR "/src/TagManage.API"
-RUN dotnet build "./TagManage.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./TagManage.API.csproj" -c Release -o /app/build --no-restore
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./TagManage.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./TagManage.API.csproj" --no-restore -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

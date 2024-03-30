@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagManage.API", "TagManage.API\TagManage.API.csproj", "{292E785B-6339-4098-8EEA-05492414EBBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagManage.Domain", "TagManage.Domain\TagManage.Domain.csproj", "{7D827942-7AB4-4476-92CA-92484FB3A826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagManage.Data", "TagManage.Data\TagManage.Data.csproj", "{FBAA262B-E638-438D-A1BC-C2A9CD34A233}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{292E785B-6339-4098-8EEA-05492414EBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{292E785B-6339-4098-8EEA-05492414EBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{292E785B-6339-4098-8EEA-05492414EBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D827942-7AB4-4476-92CA-92484FB3A826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D827942-7AB4-4476-92CA-92484FB3A826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D827942-7AB4-4476-92CA-92484FB3A826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D827942-7AB4-4476-92CA-92484FB3A826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBAA262B-E638-438D-A1BC-C2A9CD34A233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBAA262B-E638-438D-A1BC-C2A9CD34A233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBAA262B-E638-438D-A1BC-C2A9CD34A233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBAA262B-E638-438D-A1BC-C2A9CD34A233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
