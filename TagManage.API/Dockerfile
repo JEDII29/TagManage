@@ -1,5 +1,3 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
@@ -9,8 +7,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["TagManage.API/TagManage.API.csproj", "TagManage.API/"]
-COPY ["TagManage.API/TagManage.Data.csproj", "TagManage.Data/"]
-COPY ["TagManage.API/TagManage.Domain.csproj", "TagManage.Domain/"]
+COPY ["TagManage.Data/TagManage.Data.csproj", "TagManage.Data/"]
+COPY ["TagManage.Domain/TagManage.Domain.csproj", "TagManage.Domain/"]
 
 RUN dotnet restore "./TagManage.API/TagManage.API.csproj"
 COPY . .

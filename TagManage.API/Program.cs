@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("LocalConnection")));
+        builder.Configuration.GetConnectionString("DockerConnection")));
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -25,8 +25,17 @@ builder.Services.AddScoped<TagCommand>();
 builder.Services.AddScoped<TagQuery>();
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
-// Configure the HTTP request pipeline.
+    var context = services.GetRequiredService<AppDbContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
