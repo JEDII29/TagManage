@@ -13,11 +13,7 @@ namespace TagManage.Domain.ExternalApp
 {
     public class ExternalApiService : IExternalApi
     {
-        private string Url = "https://api.stackexchange.com/2.3";
-
-        ExternalApiService()
-        {
-        }
+        private string Url = "https://api.stackexchange.com/docs/tags#order=asc&sort=popular&filter=default&site=stackoverflow&run=true";
 
         public async Task<List<TagEntity>> SendRequest()
         {
@@ -30,7 +26,7 @@ namespace TagManage.Domain.ExternalApp
 
                     string responseBody = await response.Content.ReadAsStringAsync();
                     List<TagEntity> result = new List<TagEntity>();
-                        JsonSerializer.Deserialize<TagEntity>(responseBody);
+                        result = JsonSerializer.Deserialize<List<TagEntity>>(responseBody);
                     return result;
                 }
                 catch (HttpRequestException e)

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using TagManage.API.Requests;
 using TagManage.Data.Entities;
 using TagManage.Domain.Command;
@@ -17,8 +19,8 @@ namespace TagManage.API.Controllers
         private readonly TagQuery _tagsQuery;
 
         public TagController(IMapper mapper, TagCommand createTagCommand,
-            TagQuery getTagsQuery) 
-        { 
+            TagQuery getTagsQuery)
+        {
             _mapper = mapper;
             _createTagCommand = createTagCommand;
             _tagsQuery = getTagsQuery;
@@ -34,6 +36,12 @@ namespace TagManage.API.Controllers
         public async Task<IActionResult> PostTag(CreateTagRequest createTagRequest)
         {
             _createTagCommand.CreateTag(_mapper.Map<TagEntity>(createTagRequest));
+            return Ok();
+        }
+        [HttpPut("PutTags")]
+        public async Task<IActionResult> PutTags()
+        {
+            await _createTagCommand.UpdateTagFromStackBase();
             return Ok();
         }
 

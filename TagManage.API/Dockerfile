@@ -3,6 +3,8 @@ USER app
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+WORKDIR /app
+EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src

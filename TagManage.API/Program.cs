@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TagManage.Data;
 using TagManage.Domain.Command;
+using TagManage.Domain.ExternalApp;
 using TagManage.Domain.Query;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DockerConnection")));
+        builder.Configuration.GetConnectionString("LocalConnection")));
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +22,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TagManage", Version = "v1" });
 });
 
+builder.Services.AddScoped<IExternalApi, ExternalApiService>();
 builder.Services.AddScoped<TagCommand>();
 builder.Services.AddScoped<TagQuery>();
 
@@ -36,18 +38,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "TagManage");
-        c.RoutePrefix = "swagger";
+        c.RoutePrefix = string.Empty;
     });
-}
 
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
