@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IExternalApi, ExternalApiService>();
 builder.Services.AddScoped<TagCommand>();
 builder.Services.AddScoped<TagQuery>();
+builder.Services.AddScoped<PercentageTagQuery>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -42,7 +43,7 @@ app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "TagManage");
-        c.RoutePrefix = string.Empty;
+        c.RoutePrefix = "swagger";
     });
 
 app.UseAuthorization();

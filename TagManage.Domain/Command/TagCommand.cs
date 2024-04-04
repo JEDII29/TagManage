@@ -30,11 +30,7 @@ namespace TagManage.Domain.Command
 
         public async Task UpdateTagFromStackBase()
         {
-            var tagsFromStackBase = await _externalApiService.SendRequest();
-            foreach (var tag in tagsFromStackBase)
-            {
-                tag.Id = Guid.NewGuid();
-            }
+            var tagsFromStackBase = await _externalApiService.GetTagsRequest();
             _appDbContext.Tags.RemoveRange(_appDbContext.Tags);
             await _appDbContext.Tags.AddRangeAsync(tagsFromStackBase);
             await _appDbContext.SaveChangesAsync();

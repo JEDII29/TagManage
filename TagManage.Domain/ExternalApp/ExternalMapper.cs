@@ -7,8 +7,7 @@ using TagManage.Data.Entities;
 
 namespace TagManage.Domain.ExternalApp
 {
-    public interface IExternalMapper
+    public class ExternalMapper
     {
-        Task<List<TagEntity>> MapToTagEntity();
     }
 }

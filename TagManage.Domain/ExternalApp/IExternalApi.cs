@@ -9,6 +9,8 @@ namespace TagManage.Domain.ExternalApp
 {
     public interface IExternalApi
     {
-        public Task<List<TagEntity>> SendRequest();
+        public Task<List<TagEntity>> GetTagsRequest();
+
+        public Task<List<TagEntity>> GetHundredTagsRequest(string url);
     }
 }
